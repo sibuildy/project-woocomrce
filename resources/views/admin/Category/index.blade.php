@@ -1,7 +1,24 @@
 @extends('voyager::master')
 
 @section('css')
-    <style></style>
+    <style>
+        .panel-bordered>.panel-body {
+            overflow: hidden;
+            padding: 0px 20px 20px;
+        }
+        .catelory-button{
+            margin-top: 20px;
+        }
+            .desc-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* number of lines to show */
+                    line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+
+    </style>
 @stop
 
 @section('page_title', 'Your title')
@@ -22,135 +39,164 @@
 @section('content')
     <div class="page-content container-fluid">
         <div class="row">
-            <div class="col-sm-12">
-                <table id="dataTable" class="table table-hover dataTable no-footer" role="grid"
-                    aria-describedby="dataTable_info">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+            <div class="col-sm-3">
+                <div class="panel panel-bordered panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="icon wb-image"></i> Post Image</h3>
+                        <div class="panel-actions">
+                            <a class="panel-action voyager-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
+                        </div>
+                    </div>
+                    <form action="Category/store" method="POST">
+                        @csrf
 
-                                style="width: 183.031px;">
-                                    id
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        @if($errors->any())
+                            @foreach($errors->all() as $err)
+                                <ul>
+                                    <li>{{$err}}</li>
+                                </ul>
+                            @endforeach
+                        @endif
+                        <div class="panel-body">
+                            <label>Tên danh mục</label>
 
-                                style="width: 183.031px;">
-                                    Image
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            <input type="text" class="form-control" id="title" name="name" placeholder="Title" >
 
-                                style="width: 210.047px;">
-                                Tên Sản phẩm
-                            </th>
+                            </div>
+                        <div class="panel-body">
+                            <label>Đường dẫn</label>
+                            <input type="text" class="form-control" id="slug" name="slug" placeholder="Title" >
+                        </div>
+                        <div class="panel-body">
+                            <label>Danh mục cha</label>
 
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            <select class="form-control" name="category_id">
+                                <option value="1">Category 1</option>
+                                <option value="2">Category 2</option>
+                                <option value="3">demo22</option>
+                            </select>
+                        </div>
+                        <div class="panel-body">
+                            <label>Mô tả</label>
+                            <textarea class="form-control" id="desc" name="desc" placeholder="Title" ></textarea>
 
-                                style="width: 113.812px;">
-                                Giá
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        </div>
+                        <div class="panel-body">
+                            <label>Hình sản phẩm</label>
+                            <input type="file" class="form-control" id="input-image" name="input-image" placeholder="Title">
+                            <button type="submit" class="btn btn-primary pull-right catelory-button">Update Post</button>
+                        </div>
+                    </form>
 
-                                style="width: 240px;">
-                                Danh mục
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <table id="dataTable" class="table table-hover dataTable no-footer" role="grid"
+                        aria-describedby="dataTable_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                    style="width: 183.031px;">
+                                    Ảnh
+                                    <p></p>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                    style="width: 183.031px;">
+                                    Tên
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                    style="width: 800px">
+                                    Mô tả
+                                </th>
 
-                                style="width: 134.891px;">
-                               Ngày
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-
-                                style="width: 136.656px;">
-                                Thương hiệu
-                            </th>
-                            <th class="actions text-right dt-not-orderable sorting_disabled" rowspan="1" colspan="1"
-                                aria-label="Actions" style="width: 364.125px;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($Orders as $item)
-
-                            <tr role="row" >
-                                <td>
-
-
-
-                                </td>
-                                <td>
-
-                                    image
-                                </td>
-                                <td>
-                                    {{-- {{$item->name}} --}}
-
-                                </td>
-
-                                <td>
-                                    {{-- {{
-                                        number_format($item->price,0);
-                                    }} --}}
-
-
-                                </td>
-                                <td>
-                                  {{
-                                    foreach($products as $product){
-                                        foreach($product->categories as $categories){
-                                            echo($categories->name);
-                                        }
-
-                                    }
-                                  }}
-
-                                </td>
-                                <td>
-                                    {{-- {{
-                                        date('d-m-Y', strtotime($item->date_created));
-                                    }} --}}
-                                </td>
-
-                                <td>
-                                   thương hiệu nè
-                                   {{-- {{
-                                    foreach($products as $product){
-                                        foreach($product->brands as $brands){
-                                            echo($brands->name);
-                                        }
-
-                                    }
-                                  }} --}}
-
-                                </td>
-                                <td class="no-sort no-click bread-actions">
-
-                                    {{-- <a href="/admin/Product/delete/{{$item->id}}" onclick="return confirm('Are you sure?')" title="Delete" class="btn btn-sm btn-danger pull-right delete" --}}
-                                        data-id="1" id="delete-1">
-                                        <i class="voyager-trash"></i> <span class="hidden-xs hidden-sm">Delete</span>
-                                    </a>
-                                    <a href="http://localhost:8000/admin/posts/1/edit" title="Edit"
-                                        class="btn btn-sm btn-primary pull-right edit">
-                                        <i class="voyager-edit"></i> <span class="hidden-xs hidden-sm">Edit</span>
-                                    </a>
-                                    {{-- <a href=" {{$item->permalink}} " title="View" --}}
-                                        class="btn btn-sm btn-warning pull-right view">
-                                        <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">View</span>
-                                    </a>
-                                </td>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                    style="width: 153.812px;">
+                                    Đường dẫn
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                    style="width: 280px;">
+                                    Lượt
+                                </th>
+                                <th class="actions text-right dt-not-orderable sorting_disabled" rowspan="1" colspan="1"
+                                    aria-label="Actions" style="width: 364.125px;">Actions</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            @foreach ($Category as $item )
+                                @if ($item->id != 15)
+                                    <tr role="row">
+                                        <td>
+                                            @if ($item->image === null)
+                                                @php
+                                                    echo '<p>khong co</p>';
+                                                @endphp
 
-                    </tbody>
-                </table>
+
+                                            @else
+                                                <img src="{{ $item->image->src }}" width="100px" height="auto" alt="" srcset="">
+
+
+
+
+                                            @endif
+
+                                        <td>
+                                            <p>{{ $item->name }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="desc-text"> {!! $item->description !!}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $item->slug }}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $item->count }}</p>
+                                        </td>
+
+
+                                            <td class="no-sort no-click bread-actions">
+
+                                                <a href="/admin/Product/delete/" onclick="return confirm('Are you sure?')" title="Delete"
+                                                    class="btn btn-sm btn-danger pull-right delete" data-id="1" id="delete-1">
+                                                    <i class="voyager-trash"></i> <span class="hidden-xs hidden-sm">Delete</span>
+                                                </a>
+                                                <a href="/admin/Product/edit/" title="Edit" class="btn btn-sm btn-primary pull-right edit">
+                                                    <i class="voyager-edit"></i> <span class="hidden-xs hidden-sm">Edit</span>
+                                                </a>
+                                                <a href=" " title="View" class="btn btn-sm btn-warning pull-right view">
+                                                    <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">View</span>
+                                                </a>
+                                            </td>
+
+
+
+                                    </tr>
+                                @endif
+                            @endforeach
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
             </div>
+
         </div>
 
 
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
-        @endif
+
+    </div>
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
 
     </div>
 @stop
+
+

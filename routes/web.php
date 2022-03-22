@@ -35,9 +35,12 @@ Route::prefix('admin')->name('admin.')->group(function (){
         Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('delete');
         Route::get('create', [CategoryController::class, 'create'])->name('create');
         Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('update');
-
+        // Route::get('store', [CategoryController::class, 'store'])->name('store');
+        Route::post('store', [CategoryController::class, 'store'])->name('store');
     });
 
+
+    });
     Route::prefix('Product')->name('Product')->group(function (){
         Route::get('/', [ProductController::class, 'index'])->name('select');
         Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
@@ -57,5 +60,4 @@ Route::prefix('admin')->name('admin.')->group(function (){
         Route::get('create', [OrdersController::class, 'create'])->name('create');
 
     });
-});
 

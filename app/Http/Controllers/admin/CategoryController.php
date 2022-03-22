@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 use Codexshaper\WooCommerce\Facades\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormCategoryRequest;
+
 
 class CategoryController extends Controller
 {
@@ -11,10 +13,21 @@ class CategoryController extends Controller
    {
     $limit = 10;
     $Category = Category::all( ['per_page'=>$limit])->all();
+
+
     return view('admin.Category.index',['Category'=>$Category]);
 
    }
 
+   public function store(FormCategoryRequest $req)
+   {
+
+
+
+
+
+    return $req->input();
+   }
    public function create()
    {
 

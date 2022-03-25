@@ -47,20 +47,15 @@
                             <a class="panel-action voyager-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                         </div>
                     </div>
-                    <form action="Category/store" method="POST">
+                    <form action="Category/store" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        @if($errors->any())
-                            @foreach($errors->all() as $err)
-                                <ul>
-                                    <li>{{$err}}</li>
-                                </ul>
-                            @endforeach
-                        @endif
+
                         <div class="panel-body">
                             <label>Tên danh mục</label>
 
                             <input type="text" class="form-control" id="title" name="name" placeholder="Title" >
+                            <span>@error('name'){{$message}}@enderror</span>
 
                             </div>
                         <div class="panel-body">
@@ -79,11 +74,12 @@
                         <div class="panel-body">
                             <label>Mô tả</label>
                             <textarea class="form-control" id="desc" name="desc" placeholder="Title" ></textarea>
-
+                            <span>@error('desc'){{$message}}@enderror</span>
                         </div>
                         <div class="panel-body">
                             <label>Hình sản phẩm</label>
-                            <input type="file" class="form-control" id="input-image" name="input-image" placeholder="Title">
+                            <input type="file" class="form-control" id="input_image" name="input_image" placeholder="Title">
+                            <span>@error('input_image'){{$message}}@enderror</span>
                             <button type="submit" class="btn btn-primary pull-right catelory-button">Update Post</button>
                         </div>
                     </form>
@@ -157,11 +153,11 @@
 
                                             <td class="no-sort no-click bread-actions">
 
-                                                <a href="/admin/Product/delete/" onclick="return confirm('Are you sure?')" title="Delete"
+                                                <a href="/admin/Category/delete/{{ $item->id }}" onclick="return confirm('Are you sure?')" title="Delete"
                                                     class="btn btn-sm btn-danger pull-right delete" data-id="1" id="delete-1">
                                                     <i class="voyager-trash"></i> <span class="hidden-xs hidden-sm">Delete</span>
                                                 </a>
-                                                <a href="/admin/Product/edit/" title="Edit" class="btn btn-sm btn-primary pull-right edit">
+                                                <a href="/admin/Category/edit/" title="Edit" class="btn btn-sm btn-primary pull-right edit">
                                                     <i class="voyager-edit"></i> <span class="hidden-xs hidden-sm">Edit</span>
                                                 </a>
                                                 <a href=" " title="View" class="btn btn-sm btn-warning pull-right view">
@@ -190,11 +186,11 @@
 
 
     </div>
-    @if (session()->has('message'))
+    {{-- @if (session()->has('message'))
         <div class="alert alert-success">
             {{ session()->get('message') }}
         </div>
-    @endif
+    @endif --}}
 
     </div>
 @stop

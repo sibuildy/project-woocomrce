@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrdersController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +40,6 @@ Route::prefix('admin')->name('admin.')->group(function (){
         // Route::get('store', [CategoryController::class, 'store'])->name('store');
         Route::post('store', [CategoryController::class, 'store'])->name('store');
     });
-
-
-    });
     Route::prefix('Product')->name('Product')->group(function (){
         Route::get('/', [ProductController::class, 'index'])->name('select');
         Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
@@ -61,3 +60,11 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
     });
 
+    Route::prefix('report')->name('report')->group(function (){
+        Route::get('/', [ReportController::class, 'ReportAll'])->name('select');
+
+
+    });
+
+
+    });

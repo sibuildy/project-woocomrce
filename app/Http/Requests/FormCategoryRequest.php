@@ -26,7 +26,7 @@ class FormCategoryRequest extends FormRequest
         return ([
             'name'=>'required|max:50',
             'desc'=>'required|max:200',
-            'input-image'=>'required',
+            // 'input_image'=>'required',
 
         ]);
     }
@@ -37,7 +37,7 @@ class FormCategoryRequest extends FormRequest
         return [
             'name.required' => 'bạn chưa nhập gì mà nhớ nhập đúng 50 ký tự thôi tên đừng dài quá dev mệt.',
             'desc.required'=> 'bạn chưa nhập gì mà nhớ nhập đúng 200 ký tự thôi tên đừng dài quá dev mệt.',
-            'input-image.required'=>'bỏ hình vào cho nó đẹp nha',
+            // 'input_image.required'=>'bỏ hình vào cho nó đẹp nha',
         ];
     }
 

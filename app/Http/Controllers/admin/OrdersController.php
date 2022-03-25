@@ -20,7 +20,6 @@ class OrdersController extends Controller
         echo($order->meta_data[0]->key);
     }
 
-    //  return view('index',['Orders'=>$Orders]);
 
     }
      public function delete($id)

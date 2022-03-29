@@ -28,7 +28,7 @@ class OrdersController extends Controller
      $product = Product::delete( $id, $options);
 
 
-     return redirect()->back()->with('message', 'Xoá Thành Công');
+     return redirect()->back()->with('message', 'Bạn đã xoá thành công!');
 
     }
 }

@@ -20,7 +20,12 @@
 
     </style>
 @stop
+@section('javascript')
 
+
+
+
+@stop
 @section('page_title', 'Your title')
 
 @section('page_header')
@@ -29,16 +34,17 @@
 
             <i class="icon voyager-shop"></i> Category Sync site
         </h1>
-        <a class="btn btn-success btn-add-new" href="/admin/Product/create"> <i class="voyager-plus"></i> <span>Add
-                New</span></a>
+        {{-- <a class="btn btn-success btn-add-new" href="/admin/Product/create"> <i class="voyager-plus"></i> <span>Add
+                New</span></a> --}}
 
     </div>
     @include('voyager::multilingual.language-selector')
-@stop
+    @stop
 
 @section('content')
     <div class="page-content container-fluid">
         <div class="row">
+
             <div class="col-sm-3">
                 <div class="panel panel-bordered panel-primary">
                     <div class="panel-heading">
@@ -47,34 +53,39 @@
                             <a class="panel-action voyager-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                         </div>
                     </div>
-                    <form action="Category/store" method="POST" enctype="multipart/form-data">
+                    <form action="categrories/store" method="POST" enctype="multipart/form-data">
                         @csrf
 
 
                         <div class="panel-body">
                             <label>Tên danh mục</label>
 
-                            <input type="text" class="form-control" id="title" name="name" placeholder="Title" >
+                            <input type="text" class="form-control" id="title" name="name"  placeholder="Title" >
                             <span>@error('name'){{$message}}@enderror</span>
 
                             </div>
                         <div class="panel-body">
                             <label>Đường dẫn</label>
-                            <input type="text" class="form-control" id="slug" name="slug" placeholder="Title" >
+                            <input type="text" class="form-control" id="slug"   name="slug" placeholder="Title" >
                         </div>
                         <div class="panel-body">
                             <label>Danh mục cha</label>
 
                             <select class="form-control" name="category_id">
-                                <option value="1">Category 1</option>
-                                <option value="2">Category 2</option>
-                                <option value="3">demo22</option>
+                                <option value="0" >Trống</option>
+                                @foreach ($Category as $category_id_1 )
+                                    @if ($category_id_1->id != 15)
+                                        <option value="{{$category_id_1->id}}" >{{$category_id_1->name}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="panel-body">
                             <label>Mô tả</label>
                             <textarea class="form-control" id="desc" name="desc" placeholder="Title" ></textarea>
+
                             <span>@error('desc'){{$message}}@enderror</span>
+
                         </div>
                         <div class="panel-body">
                             <label>Hình sản phẩm</label>
@@ -153,16 +164,14 @@
 
                                             <td class="no-sort no-click bread-actions">
 
-                                                <a href="/admin/Category/delete/{{ $item->id }}" onclick="return confirm('Are you sure?')" title="Delete"
+                                                <a href="/admin/categrories/delete/{{ $item->id }}" onclick="return confirm('Are you sure?')" title="Delete"
                                                     class="btn btn-sm btn-danger pull-right delete" data-id="1" id="delete-1">
                                                     <i class="voyager-trash"></i> <span class="hidden-xs hidden-sm">Delete</span>
                                                 </a>
-                                                <a href="/admin/Category/edit/" title="Edit" class="btn btn-sm btn-primary pull-right edit">
+                                                <a href="/admin/categrories/edit/{{ $item->id }}" title="Edit" class="btn btn-sm btn-primary pull-right edit">
                                                     <i class="voyager-edit"></i> <span class="hidden-xs hidden-sm">Edit</span>
                                                 </a>
-                                                <a href=" " title="View" class="btn btn-sm btn-warning pull-right view">
-                                                    <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">View</span>
-                                                </a>
+
                                             </td>
 
 
@@ -186,11 +195,6 @@
 
 
     </div>
-    {{-- @if (session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
-        </div>
-    @endif --}}
 
     </div>
 @stop

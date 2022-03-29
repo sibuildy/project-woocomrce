@@ -11,9 +11,9 @@ class CategoryController extends Controller
 {
    public function index()
    {
-    $limit = 10;
+    $limit = 100;
     $Category = Category::all( ['per_page'=>$limit])->all();
-
+    // dd($Category);
 
     return view('admin.Category.index',['Category'=>$Category]);
 
@@ -41,18 +41,25 @@ class CategoryController extends Controller
         $str = preg_replace("/[^a-z0-9_\s-]/", "", $str);
         $str = preg_replace("/[\s-]+/", " ", $str);
         $str = preg_replace("/[\s_]/", "-", $str);
-
 		return $str;
 	}
+    // if($req->category_id == 0 ) {
+
+    // }
 
     $data=
     [
         'name'=>$req->name,
-        'slug'=>convert_name($req->name),
-
-
-
+       'slug'=>convert_name($req->name),
+       'description'=> $req->desc,
+       'parent'=> $req->category_id,
+       'image' => [
+        'src' => 'http://bizweb.dktcdn.net/thumb/grande/100/101/075/articles/tour-du-lich-thai-binh-sapa.jpg?v=1604714426730'
+         ]
     ];
+
+
+
 
     $category = Category::create($data);
 
@@ -62,13 +69,19 @@ class CategoryController extends Controller
    public function create()
    {
 
-    return view('admin.product.create');
+    return view('admin.category.create');
 
    }
    public function edit($id)
    {
 
-    return view('admin.product.edit');
+    $limit = 100;
+    $Category = Category::all( ['per_page'=>$limit])->all();
+
+    $Category_first = Category::find($id);
+
+   return view('admin.category.edit',['Category_first'=>$Category_first ,'Category'=>$Category]);
+
 
    }
 
@@ -77,8 +90,7 @@ class CategoryController extends Controller
 
     $options = ['force' => true];
     $category = Category::delete($id, $options);
-
-    return redirect()->back()->with('message', 'IT WORKS!');
+    return redirect()->back()->with('message', 'Bạn đã xoá thành công!');
 
 
    }

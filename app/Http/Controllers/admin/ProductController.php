@@ -15,7 +15,7 @@ class ProductController extends Controller
     $limit = 10;
     $products = Product::all( ['per_page'=>$limit ])->all();
     $products_count = Product::all( ['per_page'=>$limit ])->count();
-    // dd($products);
+
     return view('admin.product.index',['product'=>$products,'products_count'=>$products_count]);
 
    }
@@ -31,12 +31,12 @@ class ProductController extends Controller
     $product = Product::delete( $id, $options);
 
 
-    return redirect()->back()->with('message', 'IT WORKS!');
+    return redirect()->back()->with('message', 'Bạn đã xoá thành công!');
 
    }
    public function edit($id)
    {
-    // echo'hih';
+
     return view('admin.product.edit');
 
    }

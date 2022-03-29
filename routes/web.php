@@ -33,12 +33,12 @@ Route::group(['prefix' => 'admin'], function () {
 Route::prefix('admin')->name('admin.')->group(function (){
 
 
-    Route::prefix('category')->name('Category')->group(function (){
+    Route::prefix('categrories')->name('categrories')->group(function (){
         Route::get('/', [CategoryController::class, 'index'])->name('select');
         Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('delete');
         Route::get('create', [CategoryController::class, 'create'])->name('create');
         Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('update');
-        // Route::get('store', [CategoryController::class, 'store'])->name('store');
+
         Route::post('store', [CategoryController::class, 'store'])->name('store');
 
 

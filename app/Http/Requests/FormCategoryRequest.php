@@ -28,6 +28,7 @@ class FormCategoryRequest extends FormRequest
             'desc'=>'required|max:200',
             // 'input_image'=>'required',
 
+
         ]);
     }
 

@@ -21,6 +21,8 @@ class CategoryController extends Controller
 
    public function store(FormCategoryRequest $req)
    {
+
+
     function convert_name($str) {
 		$str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
 		$str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
@@ -43,19 +45,48 @@ class CategoryController extends Controller
         $str = preg_replace("/[\s_]/", "-", $str);
 		return $str;
 	}
-    // if($req->category_id == 0 ) {
+    public function upload_hinh()
+    {
 
-    // }
+
+           //Kiểm tra file
+           if ($req->hasFile('filesTest'))
+            {
+                $file = $request->filesTest;
+                $file_move= $file->move('upload', $file->getClientOriginalName());
+
+                $file_local = "./upload/".$file->getClientOriginalName();
+                $file_name = $file->getClientOriginalName();
+                $file = file_get_contents($file_local);
+                $url = 'https://techy.com.vn/wp-json/wp/v2/media/';
+                $ch = curl_init();
+                $username = 'admin';
+                $password = 'Buildy@2021';
+                curl_setopt( $ch, CURLOPT_URL, $url );
+                curl_setopt( $ch, CURLOPT_POST, 1 );
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $file );
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, [
+                'Content-Disposition: form-data; filename='.$file_name,
+                'Authorization: Basic ' . base64_encode( $username . ':' . $password ),
+                ] );
+                echo base64_encode( $username . ':' . $password );
+                $result = curl_exec( $ch );
+                curl_close( $ch );
+                var_dump( json_decode( $result ) );
+
+            }
+
+    }
 
     $data=
     [
         'name'=>$req->name,
-       'slug'=>convert_name($req->name),
-       'description'=> $req->desc,
-       'parent'=> $req->category_id,
-       'image' => [
+        'slug'=>convert_name($req->name),
+        'description'=> $req->desc,
+        'parent'=> $req->category_id,
+        'image' => [
         'src' => 'http://bizweb.dktcdn.net/thumb/grande/100/101/075/articles/tour-du-lich-thai-binh-sapa.jpg?v=1604714426730'
-         ]
+    ]
     ];
 
 
@@ -77,12 +108,30 @@ class CategoryController extends Controller
 
     $limit = 100;
     $Category = Category::all( ['per_page'=>$limit])->all();
-
     $Category_first = Category::find($id);
 
    return view('admin.category.edit',['Category_first'=>$Category_first ,'Category'=>$Category]);
 
 
+   }
+   public function update()
+   {
+        $id =$_POST['id'];
+        $data=
+        [
+
+            'name'=>$_POST['name'],
+            'slug'=>$_POST['slug'],
+            'description'=> $_POST['desc'],
+            'parent'=>$_POST['category_id'],
+            'image' =>
+                    [
+                        'src' => 'http://bizweb.dktcdn.net/thumb/grande/100/101/075/articles/tour-du-lich-thai-binh-sapa.jpg?v=1604714426730'
+                    ]
+        ];
+
+        $category = Category::update($id ,$data);
+        return redirect('/admin/categrories/')->with('success', 'A New Category Has Been Successfully update!');
    }
 
    public function delete($id)

@@ -91,7 +91,7 @@
                             <label>Hình sản phẩm</label>
                             <input type="file" class="form-control" id="input_image" name="input_image" placeholder="Title">
                             <span>@error('input_image'){{$message}}@enderror</span>
-                            <button type="submit" class="btn btn-primary pull-right catelory-button">Update Post</button>
+                            <button type="submit" class="btn btn-primary pull-right catelory-button">Create Post</button>
                         </div>
                     </form>
 

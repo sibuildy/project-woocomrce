@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\OrdersController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\AttributesController;
+use App\Http\Controllers\admin\demo;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,12 @@ Route::group(['prefix' => 'admin'], function () {
 
 });
 
+Route::get('demo', [demo::class, 'Upload_Image_function'])->name('demo');
+
+Route::get('abc', [demo::class, 'index']);
+Route::post('xyz', [demo::class, 'doUpload']);
+
+
 
 Route::prefix('admin')->name('admin.')->group(function (){
 
@@ -37,9 +44,9 @@ Route::prefix('admin')->name('admin.')->group(function (){
         Route::get('/', [CategoryController::class, 'index'])->name('select');
         Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('delete');
         Route::get('create', [CategoryController::class, 'create'])->name('create');
-        Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('update');
-
+        Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::post('store', [CategoryController::class, 'store'])->name('store');
+        Route::post('update', [CategoryController::class, 'update'])->name('update');
 
 
     });

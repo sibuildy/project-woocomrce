@@ -130,6 +130,9 @@
                         </thead>
                         <tbody>
                             @foreach ($Category as $item )
+                                {{-- @php
+                                    dd($item);
+                                @endphp --}}
                                 @if ($item->id != 15)
                                     <tr role="row">
                                         <td>

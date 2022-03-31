@@ -15,9 +15,6 @@ class demo extends Controller
     {
 
 
-
-
-           //Kiểm tra file
            if ($request->hasFile('filesTest'))
             {
                 $file = $request->filesTest;
@@ -37,13 +34,12 @@ class demo extends Controller
                 'Content-Disposition: form-data; filename='.$file_name,
                 'Authorization: Basic ' . base64_encode( $username . ':' . $password ),
                 ] );
-                echo base64_encode( $username . ':' . $password );
-                $result = curl_exec( $ch );
+                curl_exec( $ch );
                 curl_close( $ch );
-                var_dump( json_decode( $result ) );
+
 
             }
-
+            ///
 
     }
 
